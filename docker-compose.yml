@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+    manager-nginx:
+        build:
+            context: manager/docker
+            dockerfile: development/nginx/Dockerfile
+        volumes:
+            - ./manager:/app
+        depends_on:
+            - manager-api-php-fpm
+        ports:
+            - "8080:80"
+    manager-api-php-fpm:
+        build:
+            context: manager/docker
+            dockerfile: development/php-fpm/Dockerfile
+        volumes:
+            - ./manager:/app
+        depends_on:
+            - manager-postgres
+            - mailer
+    manager-api-php-cli:
+        build:
+            context: manager/docker
+            dockerfile: development/php-cli/Dockerfile
+        volumes:
+            - ./manager:/app
+            - composer:/root/.composer/cache
+
+    manager-postgres:
+        image: postgres:15-alpine
+        volumes:
+            - manager-postgres:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: secret
+            POSTGRES_DB: app
+        ports:
+            - "54321:5432"
+    mailer:
+        image: mailhog/mailhog
+        ports:
+            - "8082:8025"
+
+volumes:
+    manager-postgres:
+    composer:
