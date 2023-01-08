@@ -38,7 +38,7 @@ manager-api-composer-install:
 manager-api-composer-update:
 	docker-compose run --rm manager-api-php-cli composer update
 
-manager-api-check: manager-api-lint manager-api-analyze
+manager-api-check: manager-api-lint manager-api-analyze manager-api-test
 
 manager-api-lint:
 	docker-compose run --rm manager-api-php-cli composer lint
@@ -52,3 +52,21 @@ manager-api-analyze:
 
 manager-api-analyze-diff:
 	docker-compose run --rm managerr-api-php-cli composer psalm
+
+manager-api-test:
+	docker-compose run --rm manager-api-php-cli composer test
+
+manager-api-test-coverage:
+	docker-compose run --rm manager-api-php-cli composer test-coverage
+
+manager-api-test-unit:
+	docker-compose run --rm manager-api-php-cli composer test -- --testsuite=unit
+
+manager-api-test-unit-coverage:
+	docker-compose run --rm manager-api-php-cli composer test-coverage -- --testsuite=unit
+
+manager-api-test-functional:
+	docker-compose run --rm manager-api-php-cli composer test -- --testsuite=functional
+
+manager-api-test-functional-coverage:
+	docker-compose run --rm manager-api-php-cli composer test-coverage -- --testsuite=functional

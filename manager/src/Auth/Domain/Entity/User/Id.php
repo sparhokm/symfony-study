@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Domain\Entity\User;
 
-use App\Common\Application\Uuid;
+use App\Common\Infrastructure\Uuid;
 use Stringable;
 use Webmozart\Assert\Assert;
 

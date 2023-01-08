@@ -8,6 +8,7 @@ use App\Auth\Infrastructure\Doctrine\Type\EmailType;
 use App\Auth\Infrastructure\Doctrine\Type\IdType;
 use App\Auth\Infrastructure\Doctrine\Type\RoleType;
 use App\Auth\Infrastructure\Doctrine\Type\StatusType;
+use App\Auth\Infrastructure\PasswordHasher;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -102,12 +103,12 @@ class User
         return $user;
     }
 
-    public function confirmSignUp(): void
+    public function confirmSignUp(string $token, DateTimeImmutable $date): void
     {
-        if (!$this->isWait()) {
-            throw new DomainException('User is already confirmed.');
+        if ($this->confirmToken === null) {
+            throw new DomainException('Confirmation is not required.');
         }
-
+        $this->confirmToken->validate($token, $date);
         $this->status = Status::active();
         $this->confirmToken = null;
     }
@@ -183,6 +184,17 @@ class User
         $this->newEmailToken = null;
     }
 
+    public function changePassword(string $current, string $new, PasswordHasher $hasher): void
+    {
+        if ($this->passwordHash === null) {
+            throw new DomainException('User does not have an old password.');
+        }
+        if (!$hasher->validate($current, $this->passwordHash)) {
+            throw new DomainException('Incorrect current password.');
+        }
+        $this->passwordHash = $hasher->hash($new);
+    }
+
     public function changeRole(Role $role): void
     {
         if ($this->role->isEqualTo($role)) {
@@ -218,6 +230,46 @@ class User
     {
         /** @var Network[] */
         return $this->networks->map(static fn (UserNetwork $network) => $network->getNetwork())->toArray();
+    }
+
+    public function getConfirmToken(): ?Token
+    {
+        return $this->confirmToken;
+    }
+
+    public function getDate(): DateTimeImmutable
+    {
+        return $this->date;
+    }
+
+    public function getEmail(): Email
+    {
+        return $this->email;
+    }
+
+    public function getRole(): Role
+    {
+        return $this->role;
+    }
+
+    public function getPasswordHash(): ?string
+    {
+        return $this->passwordHash;
+    }
+
+    public function getNewEmail(): ?Email
+    {
+        return $this->newEmail;
+    }
+
+    public function getNewEmailToken(): ?Token
+    {
+        return $this->newEmailToken;
+    }
+
+    public function getPasswordResetToken(): ?Token
+    {
+        return $this->passwordResetToken;
     }
 
     #[ORM\PostLoad]

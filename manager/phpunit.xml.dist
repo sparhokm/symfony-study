@@ -19,7 +19,11 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="unit">
+            <directory>src/Auth/Test</directory>
+            <directory>src/Common/Test</directory>
+        </testsuite>
+        <testsuite name="functional">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
@@ -28,6 +32,10 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <exclude>
+            <directory>src/Auth/Test</directory>
+            <directory>src/Common/Test</directory>
+        </exclude>
     </coverage>
 
     <listeners>
