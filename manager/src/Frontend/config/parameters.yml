@@ -1,0 +1,2 @@
+parameters:
+    frontend.host: '%env(string:FRONTEND_HOST)%'

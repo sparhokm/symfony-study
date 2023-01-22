@@ -6,7 +6,8 @@ namespace App\Auth\Domain\Entity\User;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
-use DomainException;
+use App\Auth\Domain\Exception\Token\Expired;
+use App\Auth\Domain\Exception\Token\Invalid;
 use Webmozart\Assert\Assert;
 
 #[ORM\Embeddable]
@@ -28,10 +29,10 @@ final class Token
     public function validate(string $value, DateTimeImmutable $date): void
     {
         if (!$this->isEqualTo($value)) {
-            throw new DomainException('Token is invalid.');
+            throw new Invalid();
         }
         if ($this->isExpiredTo($date)) {
-            throw new DomainException('Token is expired.');
+            throw new Expired();
         }
     }
 

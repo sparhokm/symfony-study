@@ -2,11 +2,11 @@
 
 namespace App\Auth\Test\Infrastructure;
 
-use App\Auth\Infrastructure\PasswordHasher;
+use App\Auth\Infrastructure\Service\PasswordHasher;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
- * @covers \App\Auth\Infrastructure\PasswordHasher
+ * @covers \App\Auth\Infrastructure\Service\PasswordHasher
  *
  * @internal
  */

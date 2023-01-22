@@ -28,7 +28,7 @@ final class UserBuilder
         $this->email = new Email('mail@example.com');
         $this->passwordHash = 'hash';
         $this->date = new DateTimeImmutable();
-        $this->joinConfirmToken = new Token(Uuid::getUuid(), $this->date->modify('+1 day'));
+        $this->joinConfirmToken = new Token(Uuid::getUuid7(), $this->date->modify('+1 day'));
     }
 
     public function withId(Id $id): self
@@ -76,7 +76,7 @@ final class UserBuilder
     public function build(): User
     {
         if ($this->networkIdentity !== null) {
-            return User::signUpByNetwork(
+            return User::joinByNetwork(
                 $this->id,
                 $this->date,
                 $this->email,
@@ -84,7 +84,7 @@ final class UserBuilder
             );
         }
 
-        $user = User::signUpByEmail(
+        $user = User::joinUpByEmail(
             $this->id,
             $this->date,
             $this->email,
@@ -93,7 +93,7 @@ final class UserBuilder
         );
 
         if ($this->active) {
-            $user->confirmSignUp(
+            $user->confirmJoin(
                 $this->joinConfirmToken->getValue(),
                 $this->joinConfirmToken->getExpires()->modify('-1 day')
             );

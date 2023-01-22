@@ -8,12 +8,24 @@ use App\Auth\Infrastructure\Doctrine\Type\EmailType;
 use App\Auth\Infrastructure\Doctrine\Type\IdType;
 use App\Auth\Infrastructure\Doctrine\Type\RoleType;
 use App\Auth\Infrastructure\Doctrine\Type\StatusType;
-use App\Auth\Infrastructure\PasswordHasher;
+use App\Auth\Infrastructure\Service\PasswordHasher;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use DomainException;
+use App\Auth\Domain\Exception\User\ConfirmationNotRequired;
+use App\Auth\Domain\Exception\User\EmailAlreadySame;
+use App\Auth\Domain\Exception\User\EmailChangeAlreadyRequested;
+use App\Auth\Domain\Exception\User\EmailChangeNotRequested;
+use App\Auth\Domain\Exception\User\NetworkAlreadyAttached;
+use App\Auth\Domain\Exception\User\NetworkNotFound;
+use App\Auth\Domain\Exception\User\UserNotActive;
+use App\Auth\Domain\Exception\User\PasswordEqualOldPassword;
+use App\Auth\Domain\Exception\User\PasswordIncorrect;
+use App\Auth\Domain\Exception\User\PasswordResetAlreadyRequested;
+use App\Auth\Domain\Exception\User\PasswordResetNotRequested;
+use App\Auth\Domain\Exception\User\RoleAlreadySame;
+use App\Auth\Domain\Exception\User\UnableDetachLastIdentity;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
@@ -77,7 +89,7 @@ class User
         return $user;
     }
 
-    public static function signUpByEmail(
+    public static function joinUpByEmail(
         Id $id,
         DateTimeImmutable $date,
         Email $email,
@@ -91,7 +103,7 @@ class User
         return $user;
     }
 
-    public static function signUpByNetwork(
+    public static function joinByNetwork(
         Id $id,
         DateTimeImmutable $date,
         Email $email,
@@ -103,10 +115,10 @@ class User
         return $user;
     }
 
-    public function confirmSignUp(string $token, DateTimeImmutable $date): void
+    public function confirmJoin(string $token, DateTimeImmutable $date): void
     {
         if ($this->confirmToken === null) {
-            throw new DomainException('Confirmation is not required.');
+            throw new ConfirmationNotRequired();
         }
         $this->confirmToken->validate($token, $date);
         $this->status = Status::active();
@@ -117,7 +129,7 @@ class User
     {
         foreach ($this->networks as $existing) {
             if ($existing->getNetwork()->isEqualTo($network)) {
-                throw new DomainException('Network is already attached.');
+                throw new NetworkAlreadyAttached();
             }
         }
         $this->networks->add(new UserNetwork($this, $network));
@@ -128,22 +140,22 @@ class User
         foreach ($this->networks as $existing) {
             if ($existing->getNetwork()->isEqualTo($network)) {
                 if ($this->networks->count() === 1) {
-                    throw new DomainException('Unable to detach the last identity.');
+                    throw new UnableDetachLastIdentity();
                 }
                 $this->networks->removeElement($existing);
                 return;
             }
         }
-        throw new DomainException('Network is not attached.');
+        throw new NetworkNotFound();
     }
 
     public function requestPasswordReset(Token $token, DateTimeImmutable $date): void
     {
         if (!$this->isActive()) {
-            throw new DomainException('User is not active.');
+            throw new UserNotActive();
         }
         if ($this->passwordResetToken !== null && !$this->passwordResetToken->isExpiredTo($date)) {
-            throw new DomainException('Resetting is already requested.');
+            throw new PasswordResetAlreadyRequested();
         }
         $this->passwordResetToken = $token;
     }
@@ -151,7 +163,7 @@ class User
     public function resetPassword(string $token, DateTimeImmutable $date, string $hash): void
     {
         if ($this->passwordResetToken === null) {
-            throw new DomainException('Resetting is not requested.');
+            throw new PasswordResetNotRequested();
         }
         $this->passwordResetToken->validate($token, $date);
         $this->passwordResetToken = null;
@@ -161,13 +173,13 @@ class User
     public function requestEmailChanging(Token $token, DateTimeImmutable $date, Email $email): void
     {
         if (!$this->isActive()) {
-            throw new DomainException('User is not active.');
+            throw new UserNotActive();
         }
         if ($this->email->isEqualTo($email)) {
-            throw new DomainException('Email is already same.');
+            throw new EmailAlreadySame();
         }
         if ($this->newEmailToken !== null && !$this->newEmailToken->isExpiredTo($date)) {
-            throw new DomainException('Changing is already requested.');
+            throw new EmailChangeAlreadyRequested();
         }
         $this->newEmail = $email;
         $this->newEmailToken = $token;
@@ -176,7 +188,7 @@ class User
     public function confirmEmailChanging(string $token, DateTimeImmutable $date): void
     {
         if ($this->newEmail === null || $this->newEmailToken === null) {
-            throw new DomainException('Changing is not requested.');
+            throw new EmailChangeNotRequested();
         }
         $this->newEmailToken->validate($token, $date);
         $this->email = $this->newEmail;
@@ -187,10 +199,10 @@ class User
     public function changePassword(string $current, string $new, PasswordHasher $hasher): void
     {
         if ($this->passwordHash === null) {
-            throw new DomainException('User does not have an old password.');
+            throw new PasswordEqualOldPassword();
         }
         if (!$hasher->validate($current, $this->passwordHash)) {
-            throw new DomainException('Incorrect current password.');
+            throw new PasswordIncorrect();
         }
         $this->passwordHash = $hasher->hash($new);
     }
@@ -198,7 +210,7 @@ class User
     public function changeRole(Role $role): void
     {
         if ($this->role->isEqualTo($role)) {
-            throw new DomainException('Role is already same.');
+            throw new RoleAlreadySame();
         }
         $this->role = $role;
     }

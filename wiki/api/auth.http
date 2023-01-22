@@ -1,0 +1,10 @@
+### signup by email request ###
+POST {{host}}/auth/join
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "app11@test.ru",
+  "password": "1234567"
+}
+

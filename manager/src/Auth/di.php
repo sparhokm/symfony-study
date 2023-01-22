@@ -4,34 +4,32 @@ declare(strict_types=1);
 
 namespace App\Auth;
 
-use App\Auth\Infrastructure\Doctrine\Type\EmailType;
-use App\Auth\Infrastructure\Doctrine\Type\IdType;
-use App\Auth\Infrastructure\Doctrine\Type\RoleType;
-use App\Auth\Infrastructure\Doctrine\Type\StatusType;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\DoctrineConfig;
+use Symfony\Config\TwigConfig;
 
-return static function (ContainerConfigurator $di, DoctrineConfig $doctrine): void {
-    $di
-        ->services()
+
+return static function (ContainerConfigurator $di, DoctrineConfig $doctrine, TwigConfig $twigConfig): void {
+    $di->import('./config/*.yml');
+    $di->import("./config/{{$di->env()}}/*.yml");
+
+    $di->services()
         ->defaults()
         ->autowire()
         ->autoconfigure()
-        ->load(__NAMESPACE__.'\\', '.')
-        ->exclude('./{Domain,di.php}')
-    ;
+        ->load(__NAMESPACE__ . '\\', '.')
+        ->exclude('./{Domain,Test,config,di.php}');
 
     $emDefault = $doctrine->orm()->entityManager('default');
     $emDefault->autoMapping(true);
     $emDefault->mapping(__NAMESPACE__)
-        ->dir( __DIR__.'/Domain/Entity')
+        ->dir(__DIR__ . '/Domain/Entity')
         ->isBundle(false)
-        ->prefix(__NAMESPACE__.'\Domain\Entity')
-        ->alias(basename(__DIR__))
-    ;
+        ->prefix(__NAMESPACE__ . '\Domain\Entity')
+        ->alias(basename(__DIR__));
+    $di->import('config/doctrine.php');
 
-    $doctrine->dbal()->type(EmailType::NAME, EmailType::class);
-    $doctrine->dbal()->type(IdType::NAME, IdType::class);
-    $doctrine->dbal()->type(RoleType::NAME, RoleType::class);
-    $doctrine->dbal()->type(StatusType::NAME, StatusType::class);
+    $di->import('config/services.php');
+
+    $twigConfig->path(__DIR__ . '/Infrastructure/templates', 'auth');
 };

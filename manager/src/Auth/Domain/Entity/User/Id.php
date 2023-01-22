@@ -25,7 +25,7 @@ final class Id implements Stringable
 
     public static function generate(): self
     {
-        return new self(Uuid::getUuid());
+        return new self(Uuid::getUuid7());
     }
 
     public function getValue(): string

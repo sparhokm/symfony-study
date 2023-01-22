@@ -22,6 +22,7 @@
         <testsuite name="unit">
             <directory>src/Auth/Test</directory>
             <directory>src/Common/Test</directory>
+            <directory>src/Frontend/Test</directory>
         </testsuite>
         <testsuite name="functional">
             <directory>tests</directory>

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Hrct\Common\Application\Exception;
+namespace App\Common\Domain\Exception;
 
 use Exception;
 

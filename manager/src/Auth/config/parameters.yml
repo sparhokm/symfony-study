@@ -1,0 +1,2 @@
+parameters:
+    auth.token.ttl: 'PT1H'
