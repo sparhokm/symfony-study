@@ -8,7 +8,6 @@ use App\Auth\Domain\Entity\User\Token;
 use App\Auth\Domain\Exception\Token\Expired;
 use App\Auth\Domain\Exception\Token\Invalid;
 use App\Auth\Domain\Exception\User\ConfirmationNotRequired;
-use App\Auth\Domain\Exception\User\UserNotActive;
 use App\Auth\Test\Builder\UserBuilder;
 use App\Common\Infrastructure\Uuid;
 use DateTimeImmutable;
@@ -25,7 +24,8 @@ final class ConfirmTest extends TestCase
     {
         $user = (new UserBuilder())
             ->withJoinConfirmToken($token = $this->createToken())
-            ->build();
+            ->build()
+        ;
 
         self::assertTrue($user->isWait());
         self::assertFalse($user->isActive());
@@ -45,7 +45,8 @@ final class ConfirmTest extends TestCase
     {
         $user = (new UserBuilder())
             ->withJoinConfirmToken($token = $this->createToken())
-            ->build();
+            ->build()
+        ;
 
         $this->expectException(Invalid::class);
 
@@ -59,7 +60,8 @@ final class ConfirmTest extends TestCase
     {
         $user = (new UserBuilder())
             ->withJoinConfirmToken($token = $this->createToken())
-            ->build();
+            ->build()
+        ;
 
         $this->expectException(Expired::class);
 
@@ -76,7 +78,8 @@ final class ConfirmTest extends TestCase
         $user = (new UserBuilder())
             ->withJoinConfirmToken($token)
             ->active()
-            ->build();
+            ->build()
+        ;
 
         $this->expectException(ConfirmationNotRequired::class);
 

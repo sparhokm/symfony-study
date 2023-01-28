@@ -6,6 +6,6 @@ namespace App\Common\Domain\Exception;
 
 use Exception;
 
-class AppException extends Exception
+abstract class AppException extends Exception
 {
 }

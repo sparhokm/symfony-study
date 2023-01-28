@@ -42,16 +42,16 @@ manager-api-check: manager-api-lint manager-api-analyze manager-api-test
 
 manager-api-lint:
 	docker-compose run --rm manager-api-php-cli composer lint
-	docker-compose run --rm managerr-api-php-cli composer php-cs-fixer fix -- --dry-run --diff
+	docker-compose run --rm manager-api-php-cli composer php-cs-fixer fix -- --dry-run --diff -v
 
 manager-api-cs-fix:
-	docker-compose run --rm managerr-api-php-cli composer php-cs-fixer fix
+	docker-compose run --rm manager-api-php-cli composer php-cs-fixer fix
 
 manager-api-analyze:
-	docker-compose run --rm managerr-api-php-cli composer psalm -- --no-diff
+	docker-compose run --rm manager-api-php-cli composer psalm -- --no-diff
 
 manager-api-analyze-diff:
-	docker-compose run --rm managerr-api-php-cli composer psalm
+	docker-compose run --rm manager-api-php-cli composer psalm
 
 manager-api-test:
 	docker-compose run --rm manager-api-php-cli composer test

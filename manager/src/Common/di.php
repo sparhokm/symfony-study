@@ -7,10 +7,11 @@ namespace App\Common;
 use App\Common\Application\FlusherInterface;
 use App\Common\Infrastructure\Flusher;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Config\FrameworkConfig;
-use Symfony\Config\TwigConfig;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+
+use Symfony\Config\FrameworkConfig;
+use Symfony\Config\TwigConfig;
 
 return static function (ContainerConfigurator $di, TwigConfig $twigConfig, FrameworkConfig $frameworkConfig): void {
     $services = $di
@@ -19,7 +20,8 @@ return static function (ContainerConfigurator $di, TwigConfig $twigConfig, Frame
         ->autowire()
         ->autoconfigure()
         ->load(__NAMESPACE__ . '\\', '.')
-        ->exclude('./{Domain,Test,Application,di.php}');
+        ->exclude('./{Domain,Test,Application,di.php}')
+    ;
 
     $services->alias(FlusherInterface::class, Flusher::class);
 

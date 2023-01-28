@@ -20,7 +20,8 @@ final class AttachNetworkTest extends TestCase
     {
         $user = (new UserBuilder())
             ->active()
-            ->build();
+            ->build()
+        ;
 
         $network = new Network('vk', '0000001');
         $user->attachNetwork($network);
@@ -33,7 +34,8 @@ final class AttachNetworkTest extends TestCase
     {
         $user = (new UserBuilder())
             ->active()
-            ->build();
+            ->build()
+        ;
 
         $network = new Network('vk', '0000001');
 

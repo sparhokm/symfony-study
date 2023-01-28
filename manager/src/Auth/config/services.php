@@ -11,5 +11,6 @@ return static function (ContainerConfigurator $di): void {
 
     $services->set(Tokenizer::class)
         ->factory([TokenizerFactory::class, 'create'])
-        ->arg(0, '%auth.token.ttl%');
+        ->arg(0, '%auth.token.ttl%')
+    ;
 };

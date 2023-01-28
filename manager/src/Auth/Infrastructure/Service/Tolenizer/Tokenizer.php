@@ -6,11 +6,12 @@ namespace App\Auth\Infrastructure\Service\Tolenizer;
 
 use App\Auth\Domain\Entity\User\Token;
 use App\Common\Infrastructure\Uuid;
+use DateInterval;
 use DateTimeImmutable;
 
 final class Tokenizer
 {
-    public function __construct(private readonly \DateInterval $interval)
+    public function __construct(private readonly DateInterval $interval)
     {
     }
 

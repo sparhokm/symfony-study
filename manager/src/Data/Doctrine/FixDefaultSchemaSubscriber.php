@@ -23,7 +23,8 @@ final class FixDefaultSchemaSubscriber implements EventSubscriber
         $schemaManager = $args
             ->getEntityManager()
             ->getConnection()
-            ->createSchemaManager();
+            ->createSchemaManager()
+        ;
 
         /**
          * @psalm-suppress RedundantCondition

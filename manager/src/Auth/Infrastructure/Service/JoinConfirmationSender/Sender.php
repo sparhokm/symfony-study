@@ -21,7 +21,8 @@ final readonly class Sender
             ->subject('Join Confirmation')
             ->to($email->getValue())
             ->htmlTemplate('@auth/confirm.html.twig')
-            ->context(['token' => $token]);
+            ->context(['token' => $token])
+        ;
 
         $this->mailer->send($message);
     }

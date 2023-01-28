@@ -3,6 +3,7 @@
 namespace App\Auth\Test\Infrastructure;
 
 use App\Auth\Infrastructure\Service\PasswordHasher;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 /**
@@ -13,6 +14,18 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 final class PasswordHasherTest extends KernelTestCase
 {
     private ?PasswordHasher $passwordHasher;
+
+    protected function setUp(): void
+    {
+        self::bootKernel();
+
+        $this->passwordHasher = self::getContainer()->get(PasswordHasher::class);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->passwordHasher = null;
+    }
 
     public function testHash(): void
     {
@@ -26,7 +39,7 @@ final class PasswordHasherTest extends KernelTestCase
 
     public function testHashEmpty(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->passwordHasher->hash('');
     }
 
@@ -36,17 +49,5 @@ final class PasswordHasherTest extends KernelTestCase
 
         self::assertTrue($this->passwordHasher->validate($password, $hash));
         self::assertFalse($this->passwordHasher->validate('wrong-password', $hash));
-    }
-
-    protected function setUp(): void
-    {
-        self::bootKernel();
-
-        $this->passwordHasher = static::getContainer()->get(PasswordHasher::class);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->passwordHasher = null;
     }
 }

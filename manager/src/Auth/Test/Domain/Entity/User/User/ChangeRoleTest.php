@@ -10,13 +10,15 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @internal
+ * @coversNothing
  */
 final class ChangeRoleTest extends TestCase
 {
     public function testSuccess(): void
     {
         $user = (new UserBuilder())
-            ->build();
+            ->build()
+        ;
 
         $user->changeRole($role = new Role(Role::ADMIN));
 

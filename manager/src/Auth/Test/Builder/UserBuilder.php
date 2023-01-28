@@ -35,6 +35,7 @@ final class UserBuilder
     {
         $clone = clone $this;
         $clone->id = $id;
+
         return $clone;
     }
 
@@ -42,6 +43,7 @@ final class UserBuilder
     {
         $clone = clone $this;
         $clone->joinConfirmToken = $token;
+
         return $clone;
     }
 
@@ -49,6 +51,7 @@ final class UserBuilder
     {
         $clone = clone $this;
         $clone->email = $email;
+
         return $clone;
     }
 
@@ -56,6 +59,7 @@ final class UserBuilder
     {
         $clone = clone $this;
         $clone->passwordHash = $passwordHash;
+
         return $clone;
     }
 
@@ -63,6 +67,7 @@ final class UserBuilder
     {
         $clone = clone $this;
         $clone->networkIdentity = $network ?? new Network('vk', '0000001');
+
         return $clone;
     }
 
@@ -70,6 +75,7 @@ final class UserBuilder
     {
         $clone = clone $this;
         $clone->active = true;
+
         return $clone;
     }
 

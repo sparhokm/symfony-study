@@ -26,7 +26,8 @@ final class RequestTest extends TestCase
         $user = (new UserBuilder())
             ->withEmail($old = new Email('old-email@app.test'))
             ->active()
-            ->build();
+            ->build()
+        ;
 
         $now = new DateTimeImmutable();
         $token = $this->createToken($now->modify('+1 day'));
@@ -43,7 +44,8 @@ final class RequestTest extends TestCase
         $user = (new UserBuilder())
             ->withEmail($old = new Email('old-email@app.test'))
             ->active()
-            ->build();
+            ->build()
+        ;
 
         $now = new DateTimeImmutable();
         $token = $this->createToken($now->modify('+1 day'));

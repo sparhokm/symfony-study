@@ -32,7 +32,7 @@ final class CreateTest extends TestCase
     {
         $value = Uuid::getUuid7();
 
-        $token = new Token(\mb_strtoupper($value), new DateTimeImmutable());
+        $token = new Token(mb_strtoupper($value), new DateTimeImmutable());
 
         self::assertEquals($value, $token->getValue());
     }

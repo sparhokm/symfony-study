@@ -6,7 +6,6 @@ namespace App\Auth\Test\Domain\Entity\User\User;
 
 use App\Auth\Domain\Exception\User\PasswordEqualOldPassword;
 use App\Auth\Domain\Exception\User\PasswordIncorrect;
-use App\Auth\Domain\Exception\User\UserNotFound;
 use App\Auth\Infrastructure\Service\PasswordHasher;
 use App\Auth\Test\Builder\UserBuilder;
 use PHPUnit\Framework\TestCase;
@@ -22,7 +21,8 @@ final class ChangePasswordTest extends TestCase
     {
         $user = (new UserBuilder())
             ->active()
-            ->build();
+            ->build()
+        ;
 
         $hasher = $this->createHasher(true, $hash = 'new-hash');
 
@@ -39,7 +39,8 @@ final class ChangePasswordTest extends TestCase
     {
         $user = (new UserBuilder())
             ->active()
-            ->build();
+            ->build()
+        ;
 
         $hasher = $this->createHasher(false, 'new-hash');
 
@@ -55,7 +56,8 @@ final class ChangePasswordTest extends TestCase
     {
         $user = (new UserBuilder())
             ->viaNetwork()
-            ->build();
+            ->build()
+        ;
 
         $hasher = $this->createHasher(false, 'new-hash');
 
@@ -72,6 +74,7 @@ final class ChangePasswordTest extends TestCase
         $hasher = $this->createStub(PasswordHasher::class);
         $hasher->method('validate')->willReturn($valid);
         $hasher->method('hash')->willReturn($hash);
+
         return $hasher;
     }
 }

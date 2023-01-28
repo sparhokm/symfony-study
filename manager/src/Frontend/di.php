@@ -17,10 +17,10 @@ return static function (ContainerConfigurator $di): void {
         ->defaults()
         ->autowire()
         ->autoconfigure()
-        ->load(__NAMESPACE__.'\\', '.')
+        ->load(__NAMESPACE__ . '\\', '.')
         ->exclude('./{Domain,Test,Application,di.php}')
     ;
 
-    $services->set(FrontendUrlGenerator::class)->arg('$frontendHost', '%frontend.host%');
+    $services->set(FrontendUrlGenerator::class)->arg(0, '%frontend.host%');
     $services->set(FrontendUrlTwigExtension::class)->tag('twig.extension');
 };

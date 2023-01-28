@@ -27,8 +27,8 @@ final class Network
     public function isEqualTo(self $network): bool
     {
         return
-            $this->getName() === $network->getName() &&
-            $this->getIdentity() === $network->getIdentity();
+            $this->getName() === $network->getName()
+            && $this->getIdentity() === $network->getIdentity();
     }
 
     public function getName(): string

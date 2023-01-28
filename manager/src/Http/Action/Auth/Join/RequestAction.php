@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Action\Auth\Join;
 
+use App\Auth\Application\Command\JoinByEmail\Request\Command;
+use App\Auth\Application\Command\JoinByEmail\Request\Handler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Auth\Application\Command\JoinByEmail\Request\Command;
-use App\Auth\Application\Command\JoinByEmail\Request\Handler;
 use Symfony\Component\Serializer\SerializerInterface;
 
 final class RequestAction extends AbstractController

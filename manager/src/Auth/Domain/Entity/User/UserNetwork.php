@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(readOnly: true)]
 #[ORM\Table(name: 'auth_user_networks')]
 #[ORM\UniqueConstraint(columns: ['network_name', 'network_identity'])]
+/** @final */
 class UserNetwork
 {
     #[ORM\Column(type: 'guid')]

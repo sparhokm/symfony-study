@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\Domain\Exception\Token;
 
-use Throwable;
 use App\Common\Domain\Exception\AppException;
+use Throwable;
 
 final class Invalid extends AppException
 {

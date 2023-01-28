@@ -4,6 +4,19 @@ declare(strict_types=1);
 
 namespace App\Auth\Domain\Entity\User;
 
+use App\Auth\Domain\Exception\User\ConfirmationNotRequired;
+use App\Auth\Domain\Exception\User\EmailAlreadySame;
+use App\Auth\Domain\Exception\User\EmailChangeAlreadyRequested;
+use App\Auth\Domain\Exception\User\EmailChangeNotRequested;
+use App\Auth\Domain\Exception\User\NetworkAlreadyAttached;
+use App\Auth\Domain\Exception\User\NetworkNotFound;
+use App\Auth\Domain\Exception\User\PasswordEqualOldPassword;
+use App\Auth\Domain\Exception\User\PasswordIncorrect;
+use App\Auth\Domain\Exception\User\PasswordResetAlreadyRequested;
+use App\Auth\Domain\Exception\User\PasswordResetNotRequested;
+use App\Auth\Domain\Exception\User\RoleAlreadySame;
+use App\Auth\Domain\Exception\User\UnableDetachLastIdentity;
+use App\Auth\Domain\Exception\User\UserNotActive;
 use App\Auth\Infrastructure\Doctrine\Type\EmailType;
 use App\Auth\Infrastructure\Doctrine\Type\IdType;
 use App\Auth\Infrastructure\Doctrine\Type\RoleType;
@@ -13,23 +26,11 @@ use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use App\Auth\Domain\Exception\User\ConfirmationNotRequired;
-use App\Auth\Domain\Exception\User\EmailAlreadySame;
-use App\Auth\Domain\Exception\User\EmailChangeAlreadyRequested;
-use App\Auth\Domain\Exception\User\EmailChangeNotRequested;
-use App\Auth\Domain\Exception\User\NetworkAlreadyAttached;
-use App\Auth\Domain\Exception\User\NetworkNotFound;
-use App\Auth\Domain\Exception\User\UserNotActive;
-use App\Auth\Domain\Exception\User\PasswordEqualOldPassword;
-use App\Auth\Domain\Exception\User\PasswordIncorrect;
-use App\Auth\Domain\Exception\User\PasswordResetAlreadyRequested;
-use App\Auth\Domain\Exception\User\PasswordResetNotRequested;
-use App\Auth\Domain\Exception\User\RoleAlreadySame;
-use App\Auth\Domain\Exception\User\UnableDetachLastIdentity;
 
 #[ORM\Entity]
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: 'auth_users')]
+/** @final */
 class User
 {
     #[ORM\Column(type: IdType::NAME)]
@@ -86,6 +87,7 @@ class User
         $user = new self($id, $date, $email);
         $user->passwordHash = $hash;
         $user->status = Status::active();
+
         return $user;
     }
 
@@ -100,6 +102,7 @@ class User
         $user->passwordHash = $hash;
         $user->confirmToken = $token;
         $user->status = Status::wait();
+
         return $user;
     }
 
@@ -112,6 +115,7 @@ class User
         $user = new self($id, $date, $email);
         $user->status = Status::active();
         $user->networks->add(new UserNetwork($user, $network));
+
         return $user;
     }
 
@@ -143,9 +147,11 @@ class User
                     throw new UnableDetachLastIdentity();
                 }
                 $this->networks->removeElement($existing);
+
                 return;
             }
         }
+
         throw new NetworkNotFound();
     }
 
@@ -240,7 +246,6 @@ class User
      */
     public function getNetworks(): array
     {
-        /** @var Network[] */
         return $this->networks->map(static fn (UserNetwork $network) => $network->getNetwork())->toArray();
     }
 

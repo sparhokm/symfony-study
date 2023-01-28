@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use App\Common\Infrastructure\Validator\ValidationException;
 use App\Common\Domain\Exception\AppException;
+use App\Common\Infrastructure\Validator\ValidationException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
 
-class ErrorController extends AbstractController
+final class ErrorController extends AbstractController
 {
     public function show(Throwable $exception, DebugLoggerInterface $logger = null): Response
     {
@@ -65,6 +65,7 @@ class ErrorController extends AbstractController
         foreach ($violations as $violation) {
             $errors[$violation->getPropertyPath()] = $violation->getMessage();
         }
+
         return $errors;
     }
 
@@ -74,6 +75,7 @@ class ErrorController extends AbstractController
         if ($debugInfo = $this->getDebugInfo($throwable)) {
             $errors['debug'] = $debugInfo;
         }
+
         return $errors;
     }
 

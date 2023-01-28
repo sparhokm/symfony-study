@@ -31,6 +31,8 @@
     },
     "require-dev": {
         "dg/bypass-finals": "^1.4",
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "overtrue/phplint": "^6.1",
         "phpunit/phpunit": "^9.5",
         "symfony/browser-kit": "6.2.*",
         "symfony/css-selector": "6.2.*",
@@ -78,7 +80,7 @@
             "@auto-scripts"
         ],
         "lint": "phplint",
-        "php-cs-fixer": "php-cs-fixer --config=.php-cs-fixer.php --allow-risky=yes",
+        "php-cs-fixer": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer --config=.php-cs-fixer.dist.php --allow-risky=yes",
         "psalm": "psalm --config=psalm.xml",
         "test": "php bin/phpunit --colors=always",
         "test-coverage": "XDEBUG_MODE=coverage php bin/phpunit --colors=always --coverage-html var/test/coverage",

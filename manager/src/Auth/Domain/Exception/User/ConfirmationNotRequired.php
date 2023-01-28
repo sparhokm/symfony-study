@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Auth\Domain\Exception\User;
 
-use Throwable;
 use App\Common\Domain\Exception\AppException;
+use Throwable;
 
 final class ConfirmationNotRequired extends AppException
 {

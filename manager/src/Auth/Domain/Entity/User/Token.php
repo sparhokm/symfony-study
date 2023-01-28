@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Auth\Domain\Entity\User;
 
-use DateTimeImmutable;
-use Doctrine\ORM\Mapping as ORM;
 use App\Auth\Domain\Exception\Token\Expired;
 use App\Auth\Domain\Exception\Token\Invalid;
+use DateTimeImmutable;
+use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
 
 #[ORM\Embeddable]
@@ -17,7 +17,7 @@ final class Token
     private string $value;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private \DateTimeImmutable $expires;
+    private DateTimeImmutable $expires;
 
     public function __construct(string $value, DateTimeImmutable $expires)
     {
