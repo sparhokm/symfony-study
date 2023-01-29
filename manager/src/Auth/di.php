@@ -6,11 +6,10 @@ namespace App\Auth;
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\DoctrineConfig;
-use Symfony\Config\TwigConfig;
 
-return static function (ContainerConfigurator $di, DoctrineConfig $doctrine, TwigConfig $twigConfig): void {
-    $di->import('./config/*.yml');
-    $di->import("./config/{{$di->env()}}/*.yml");
+return static function (ContainerConfigurator $di, DoctrineConfig $doctrine): void {
+    $di->import('./config/parameters.yml');
+    $di->import("./config/{{$di->env()}}/parameters.yml");
 
     $di->services()
         ->defaults()
@@ -28,9 +27,7 @@ return static function (ContainerConfigurator $di, DoctrineConfig $doctrine, Twi
         ->prefix(__NAMESPACE__ . '\Domain\Entity')
         ->alias(basename(__DIR__))
     ;
-    $di->import('config/doctrine.php');
 
-    $di->import('config/services.php');
-
-    $twigConfig->path(__DIR__ . '/Infrastructure/templates', 'auth');
+    $di->import('./config/*.php');
+    $di->import("./config/{{$di->env()}}/*.php");
 };

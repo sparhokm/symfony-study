@@ -14,6 +14,13 @@ use Throwable;
 
 final class ErrorController extends AbstractController
 {
+    private bool $showErrorDetails;
+
+    public function __construct(bool $showErrorDetails)
+    {
+        $this->showErrorDetails = $showErrorDetails;
+    }
+
     public function show(Throwable $exception, DebugLoggerInterface $logger = null): Response
     {
         return match (true) {
@@ -81,16 +88,16 @@ final class ErrorController extends AbstractController
 
     private function getDebugInfo(Throwable $throwable): ?array
     {
-        if ($this->getParameter('http.error.show_detail')) {
-            return [
-                'file' => $throwable->getFile(),
-                'line' => $throwable->getLine(),
-                'code' => $throwable->getCode(),
-                'message' => $throwable->getMessage(),
-                'class' => get_debug_type($throwable),
-            ];
+        if (!$this->showErrorDetails) {
+            return null;
         }
 
-        return null;
+        return [
+            'file' => $throwable->getFile(),
+            'line' => $throwable->getLine(),
+            'code' => $throwable->getCode(),
+            'message' => $throwable->getMessage(),
+            'class' => get_debug_type($throwable),
+        ];
     }
 }

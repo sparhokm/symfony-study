@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Frontend;
 
-use App\Frontend\Infrastructure\FrontendUrlGenerator;
-use App\Frontend\Infrastructure\FrontendUrlTwigExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function (ContainerConfigurator $di): void {
-    $di->import('./config/*.yml');
-    $di->import("./config/{{$di->env()}}/*.yml");
+    $di->import('./config/parameters.yml');
+    $di->import("./config/{{$di->env()}}/parameters.yml");
 
-    $services = $di
+    $di
         ->services()
         ->defaults()
         ->autowire()
@@ -21,6 +19,6 @@ return static function (ContainerConfigurator $di): void {
         ->exclude('./{Domain,Test,Application,di.php}')
     ;
 
-    $services->set(FrontendUrlGenerator::class)->arg(0, '%frontend.host%');
-    $services->set(FrontendUrlTwigExtension::class)->tag('twig.extension');
+    $di->import('./config/*.php');
+    $di->import("./config/{{$di->env()}}/*.php");
 };
