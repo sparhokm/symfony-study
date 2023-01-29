@@ -25,7 +25,9 @@ return (new PhpCsFixer\Config())
 
         'concat_space' => ['spacing' => 'one'],
         'cast_spaces' => ['space' => 'none'],
+
         'global_namespace_import' => true,
+        'ordered_imports' => ['imports_order' => ['class', 'function', 'const']],
 
         'phpdoc_to_comment' => false,
         'phpdoc_separation' => false,

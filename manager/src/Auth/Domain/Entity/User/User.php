@@ -73,22 +73,15 @@ class User
     #[ORM\Version]
     private int $version;
 
-    private function __construct(Id $id, DateTimeImmutable $date, Email $email)
+    private function __construct(Id $id, DateTimeImmutable $date, Email $email, Status $status)
     {
         $this->id = $id;
         $this->date = $date;
         $this->email = $email;
         $this->role = Role::user();
         $this->networks = new ArrayCollection();
-    }
-
-    public static function create(Id $id, DateTimeImmutable $date, Email $email, string $hash): self
-    {
-        $user = new self($id, $date, $email);
-        $user->passwordHash = $hash;
-        $user->status = Status::active();
-
-        return $user;
+        $this->status = $status;
+        $this->version = 0;
     }
 
     public static function joinUpByEmail(
@@ -98,10 +91,9 @@ class User
         string $hash,
         Token $token
     ): self {
-        $user = new self($id, $date, $email);
+        $user = new self($id, $date, $email, Status::wait());
         $user->passwordHash = $hash;
         $user->confirmToken = $token;
-        $user->status = Status::wait();
 
         return $user;
     }
@@ -112,8 +104,7 @@ class User
         Email $email,
         Network $network
     ): self {
-        $user = new self($id, $date, $email);
-        $user->status = Status::active();
+        $user = new self($id, $date, $email, Status::active());
         $user->networks->add(new UserNetwork($user, $network));
 
         return $user;

@@ -19,7 +19,7 @@ final class RoleType extends StringType
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Role
     {
-        return !empty($value) ? new Role($value) : null;
+        return !empty($value) ? new Role((string)$value) : null;
     }
 
     public function getName(): string
