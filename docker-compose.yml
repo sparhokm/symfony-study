@@ -16,6 +16,8 @@ services:
             dockerfile: development/php-fpm/Dockerfile
         volumes:
             - ./manager:/app
+        environment:
+            PHP_IDE_CONFIG: serverName=manager_api
         depends_on:
             - manager-postgres
             - mailer

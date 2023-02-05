@@ -14,7 +14,7 @@ return static function (ContainerConfigurator $di, FrameworkConfig $framework): 
     ;
 
     $services->set(ErrorController::class)
-        ->arg(0, '%http.error.show_detail%')
+        ->args(['%http.error.show_detail%'])
     ;
 
     $framework->errorController(ErrorController::class . '::show');

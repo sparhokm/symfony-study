@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Common\Infrastructure\Validator;
 
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use App\Common\Application\Validator\ValidationException;
+use App\Common\Application\Validator\ValidatorInterface;
 
-final readonly class Validator
+final class Validator implements ValidatorInterface
 {
-    public function __construct(private ValidatorInterface $validator)
+    public function __construct(private readonly \Symfony\Component\Validator\Validator\ValidatorInterface $validator)
     {
     }
 

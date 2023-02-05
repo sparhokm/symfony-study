@@ -20,9 +20,9 @@
 
     <testsuites>
         <testsuite name="unit">
-            <directory>src/Auth/Test</directory>
             <directory>src/Common/Test</directory>
-            <directory>src/Frontend/Test</directory>
+            <directory>src/Module/Auth/Test</directory>
+            <directory>src/Module/Frontend/Test</directory>
         </testsuite>
         <testsuite name="functional">
             <directory>tests</directory>

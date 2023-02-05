@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Action;
 
-use App\Common\Domain\Exception\AppException;
-use App\Common\Infrastructure\Validator\ValidationException;
+use App\Common\Application\AppException;
+use App\Common\Application\Denormalizer\DenormalizerException;
+use App\Common\Application\Validator\ValidationException;
+use App\Common\Domain\DomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
@@ -24,10 +27,24 @@ final class ErrorController extends AbstractController
     public function show(Throwable $exception, DebugLoggerInterface $logger = null): Response
     {
         return match (true) {
-            $exception instanceof AppException => $this->appException($exception),
+            $exception instanceof DenormalizerException => $this->denormalizeException($exception),
             $exception instanceof ValidationException => $this->validatorException($exception),
+            $exception instanceof AppException => $this->appException($exception),
+            $exception instanceof BadRequestHttpException => $this->badRequestException($exception),
+            $exception instanceof DomainException => $this->domainException($exception),
             default => $this->systemException($exception)
         };
+    }
+
+    private function domainException(DomainException $appException): Response
+    {
+        return $this->json(
+            $this->getErrorData(
+                [$appException->getMessage()],
+                $appException
+            ),
+            422
+        );
     }
 
     private function appException(AppException $appException): Response
@@ -37,7 +54,18 @@ final class ErrorController extends AbstractController
                 [$appException->getMessage()],
                 $appException
             ),
-            422
+            400
+        );
+    }
+
+    private function badRequestException(BadRequestHttpException $appException): Response
+    {
+        return $this->json(
+            $this->getErrorData(
+                ['Ошибка входных данных.'],
+                $appException
+            ),
+            400
         );
     }
 
@@ -51,7 +79,18 @@ final class ErrorController extends AbstractController
 
         return $this->json(
             $errorData,
-            422
+            400
+        );
+    }
+
+    private function denormalizeException(DenormalizerException $denormalizerException): Response
+    {
+        return $this->json(
+            $this->getErrorData(
+                ['Ошибка входных данных.'],
+                $denormalizerException
+            ),
+            400
         );
     }
 

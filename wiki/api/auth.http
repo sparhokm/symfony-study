@@ -1,10 +1,38 @@
-### signup by email request ###
+### join by email request ###
 POST {{host}}/auth/join
 Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "app11@test.ru",
+  "email": "app2@test.ru",
   "password": "1234567"
 }
 
+### confirm join by token ###
+POST {{host}}/auth/join/confirm
+Content-Type: application/json
+Accept: application/json
+
+{
+    "token": "01861fd0-b055-7928-b2c2-4f77dcbf4175"
+}
+
+
+### password reset request ###
+POST {{host}}/auth/password/reset
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "app2@test.ru"
+}
+
+### password reset confirm ###
+POST {{host}}/auth/password/reset/confirm
+Content-Type: application/json
+Accept: application/json
+
+{
+    "token": "01862017-8e1d-7f5a-838b-1016ac5b06a2",
+    "password": "1234567"
+}
