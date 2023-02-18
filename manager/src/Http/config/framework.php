@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use App\Http\Action\ErrorController;
+use App\Http\Infrastructure\ErrorController;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\FrameworkConfig;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Http\Action\Auth;
+use App\Http\Application\Action\Auth;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return static function (RoutingConfigurator $routes) {
@@ -24,5 +24,23 @@ return static function (RoutingConfigurator $routes) {
     $routes->add('auth_password_reset_confirm', '/auth/password/reset/confirm')
         ->methods(['POST'])
         ->controller([Auth\PasswordReset\ConfirmAction::class, 'request'])
+    ;
+
+    $routes->add('auth_login', '/auth/login')
+        ->methods(['POST'])
+        ->controller([Auth\Login\LoginAction::class, 'request'])
+    ;
+    $routes->add('auth_logout', '/auth/logout')
+        ->methods(['GET'])
+    ;
+
+    $routes->add('home', '/')
+        ->methods(['GET'])
+        ->controller([Auth\HomeAction::class, 'request'])
+    ;
+
+    $routes->add('auth_user', '/auth/user')
+        ->methods(['GET'])
+        ->controller([Auth\User\UserAction::class, 'request'])
     ;
 };

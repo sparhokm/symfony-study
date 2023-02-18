@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Action\Auth\Join;
+namespace App\Http\Application\Action\Auth\PasswordReset;
 
-use App\Common\Application\Denormalizer\DenormalizerInterface;
-use App\Module\Auth\Application\Command\JoinByEmail\Confirm\Command;
-use App\Module\Auth\Application\Command\JoinByEmail\Confirm\Handler;
+use App\Common\Infrastructure\Denormalizer\Denormalizer;
+use App\Module\Auth\Application\Command\PasswordReset\Confirm\Command;
+use App\Module\Auth\Application\Command\PasswordReset\Confirm\Handler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class ConfirmAction extends AbstractController
 {
     public function __construct(
-        private readonly DenormalizerInterface $denormalizer,
+        private readonly Denormalizer $denormalizer,
         private readonly Handler $handler,
     ) {
     }

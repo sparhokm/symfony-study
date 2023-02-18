@@ -36,3 +36,28 @@ Accept: application/json
     "token": "01862017-8e1d-7f5a-838b-1016ac5b06a2",
     "password": "1234567"
 }
+
+### login by email and password ###
+POST {{host}}/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "app2@test.ru",
+    "password": "1234567"
+}
+
+### logout ###
+GET {{host}}/auth/logout
+Content-Type: application/json
+Accept: application/json
+
+### user ###
+GET {{host}}
+Content-Type: application/json
+Accept: application/json
+
+### auth user ###
+GET {{host}}/auth/user
+Content-Type: application/json
+Accept: application/json

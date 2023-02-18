@@ -21,5 +21,6 @@ return static function (ContainerConfigurator $di, DoctrineMigrationsConfig $doc
     ;
 
     $doctrineMigrationsConfig->migrationsPath(__NAMESPACE__, __DIR__ . '/Migrations');
+    $doctrineMigrationsConfig->organizeMigrations('BY_YEAR');
     $doctrineMigrationsConfig->enableProfiler(false);
 };

@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Action;
+namespace App\Http\Infrastructure;
 
 use App\Common\Application\AppException;
 use App\Common\Application\Denormalizer\DenormalizerException;
 use App\Common\Application\Validator\ValidationException;
 use App\Common\Domain\DomainException;
+use App\Http\Application\Exception\AccessDenied;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Throwable;
@@ -30,7 +31,7 @@ final class ErrorController extends AbstractController
             $exception instanceof DenormalizerException => $this->denormalizeException($exception),
             $exception instanceof ValidationException => $this->validatorException($exception),
             $exception instanceof AppException => $this->appException($exception),
-            $exception instanceof BadRequestHttpException => $this->badRequestException($exception),
+            $exception instanceof HttpException => $this->badRequestException($exception),
             $exception instanceof DomainException => $this->domainException($exception),
             default => $this->systemException($exception)
         };
@@ -54,18 +55,18 @@ final class ErrorController extends AbstractController
                 [$appException->getMessage()],
                 $appException
             ),
-            400
+            $appException instanceof AccessDenied ? 401 : 400
         );
     }
 
-    private function badRequestException(BadRequestHttpException $appException): Response
+    private function badRequestException(HttpException $httpException): Response
     {
         return $this->json(
             $this->getErrorData(
-                ['Ошибка входных данных.'],
-                $appException
+                ['http error'],
+                $httpException
             ),
-            400
+            $httpException->getStatusCode()
         );
     }
 

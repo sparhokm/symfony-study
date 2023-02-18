@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Module\Auth\Domain\Exception\User;
+namespace App\Http\Application\Exception;
 
-use App\Common\Domain\DomainException;
+use App\Common\Application\AppException;
 use Throwable;
 
-final class PasswordIncorrect extends DomainException
+final class LoginException extends AppException
 {
-    private const MESSAGE = 'Некорректный пароль.';
+    private const MESSAGE = 'Ошибка авторизации.';
 
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
     {

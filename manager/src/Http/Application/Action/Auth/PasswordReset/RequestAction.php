@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Action\Auth\PasswordReset;
+namespace App\Http\Application\Action\Auth\PasswordReset;
 
 use App\Common\Infrastructure\Denormalizer\Denormalizer;
-use App\Module\Auth\Application\Command\PasswordReset\Confirm\Command;
-use App\Module\Auth\Application\Command\PasswordReset\Confirm\Handler;
+use App\Module\Auth\Application\Command\PasswordReset\Request\Command;
+use App\Module\Auth\Application\Command\PasswordReset\Request\Handler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ConfirmAction extends AbstractController
+final class RequestAction extends AbstractController
 {
     public function __construct(
         private readonly Denormalizer $denormalizer,
-        private readonly Handler $handler,
+        private readonly Handler $handler
     ) {
     }
 

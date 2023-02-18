@@ -32,7 +32,7 @@
     "require-dev": {
         "dg/bypass-finals": "^1.4",
         "friendsofphp/php-cs-fixer": "^3.13",
-        "overtrue/phplint": "^6.1",
+        "overtrue/phplint": "^9.0",
         "phpunit/phpunit": "^9.6",
         "psalm/plugin-phpunit": "^0.18.4",
         "psalm/plugin-symfony": "^5.0",
