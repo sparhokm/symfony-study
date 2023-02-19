@@ -11,7 +11,7 @@ use Webmozart\Assert\Assert;
 
 final class PasswordHasher
 {
-    private PasswordHasherInterface $passwordHasher;
+    private readonly PasswordHasherInterface $passwordHasher;
 
     public function __construct(PasswordHasherFactoryInterface $passwordHasher)
     {

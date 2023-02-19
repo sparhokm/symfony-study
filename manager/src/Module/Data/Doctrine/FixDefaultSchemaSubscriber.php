@@ -11,6 +11,9 @@ use Doctrine\ORM\Tools\ToolEvents;
 
 final class FixDefaultSchemaSubscriber implements EventSubscriber
 {
+    /**
+     * @return array{postGenerateSchema: string}
+     */
     public function getSubscribedEvents(): array
     {
         return [

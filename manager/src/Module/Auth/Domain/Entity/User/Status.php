@@ -12,7 +12,7 @@ final class Status
     private const ACTIVE = 'active';
     private const BLOCKED = 'blocked';
 
-    private string $value;
+    private readonly string $value;
 
     public function __construct(string $value)
     {

@@ -17,8 +17,8 @@ final class UserRepository
     /**
      * @var EntityRepository<User>
      */
-    private EntityRepository $repo;
-    private EntityManagerInterface $em;
+    private readonly EntityRepository $repo;
+    private readonly EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {

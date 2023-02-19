@@ -11,7 +11,7 @@ use Throwable;
 final class ValidationException extends AppException
 {
     private const MESSAGE = 'Ошибка входных данных.';
-    private ConstraintViolationListInterface $violations;
+    private readonly ConstraintViolationListInterface $violations;
 
     public function __construct(
         ConstraintViolationListInterface $violations,

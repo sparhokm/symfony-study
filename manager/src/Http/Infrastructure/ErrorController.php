@@ -18,7 +18,7 @@ use Throwable;
 
 final class ErrorController extends AbstractController
 {
-    private bool $showErrorDetails;
+    private readonly bool $showErrorDetails;
 
     public function __construct(bool $showErrorDetails)
     {
@@ -116,6 +116,9 @@ final class ErrorController extends AbstractController
         return $errors;
     }
 
+    /**
+     * @return array{errors: mixed[], debug?: mixed[]}
+     */
     private function getErrorData(array $textErrors, Throwable $throwable): array
     {
         $errors = ['errors' => $textErrors];

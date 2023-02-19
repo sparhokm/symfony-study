@@ -34,8 +34,11 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function supports(Request $request): bool
     {
-        return 'auth_login' === $request->attributes->get('_route')
-            && $request->isMethod('POST');
+        if ($request->attributes->get('_route') !== 'auth_login') {
+            return false;
+        }
+
+        return $request->isMethod('POST');
     }
 
     public function authenticate(Request $request): Passport
@@ -92,7 +95,7 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
      */
     private function getCredentials(Request $request): array
     {
-        $data = json_decode($request->getContent());
+        $data = json_decode($request->getContent(), null, 512, JSON_THROW_ON_ERROR);
         if (!$data instanceof stdClass) {
             throw new BadRequestHttpException('Invalid JSON.');
         }

@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Module\Auth\Domain\Entity\User;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
 
 #[ORM\Embeddable]
 final class Network
 {
-    #[ORM\Column(type: 'string', length: 16)]
-    private string $name;
+    #[ORM\Column(type: Types::STRING, length: 16)]
+    private readonly string $name;
 
-    #[ORM\Column(type: 'string', length: 16)]
-    private string $identity;
+    #[ORM\Column(type: Types::STRING, length: 16)]
+    private readonly string $identity;
 
     public function __construct(string $name, string $identity)
     {
@@ -26,9 +27,11 @@ final class Network
 
     public function isEqualTo(self $network): bool
     {
-        return
-            $this->getName() === $network->getName()
-            && $this->getIdentity() === $network->getIdentity();
+        if ($this->getName() !== $network->getName()) {
+            return false;
+        }
+
+        return $this->getIdentity() === $network->getIdentity();
     }
 
     public function getName(): string

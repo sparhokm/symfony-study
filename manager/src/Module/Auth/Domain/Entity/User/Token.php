@@ -7,17 +7,18 @@ namespace App\Module\Auth\Domain\Entity\User;
 use App\Module\Auth\Domain\Exception\Token\Expired;
 use App\Module\Auth\Domain\Exception\Token\Invalid;
 use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
 
 #[ORM\Embeddable]
 final class Token
 {
-    #[ORM\Column(type: 'string', nullable: true)]
-    private string $value;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    private readonly string $value;
 
-    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    private DateTimeImmutable $expires;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private readonly DateTimeImmutable $expires;
 
     public function __construct(string $value, DateTimeImmutable $expires)
     {

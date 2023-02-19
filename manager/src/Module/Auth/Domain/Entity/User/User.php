@@ -25,6 +25,7 @@ use App\Module\Auth\Infrastructure\Service\PasswordHasher;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -37,13 +38,13 @@ class User
     #[ORM\Id]
     private Id $id;
 
-    #[ORM\Column(type: 'datetime_immutable')]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $date;
 
     #[ORM\Column(type: EmailType::NAME, unique: true)]
     private Email $email;
 
-    #[ORM\Column(type: 'string', nullable: true)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     private ?string $passwordHash = null;
 
     #[ORM\Column(type: StatusType::NAME, length: 16)]
@@ -71,7 +72,7 @@ class User
     private Collection $networks;
 
     #[ORM\Version]
-    private int $version;
+    private int $version = 0;
 
     private function __construct(Id $id, DateTimeImmutable $date, Email $email, Status $status)
     {
@@ -81,7 +82,6 @@ class User
         $this->role = Role::user();
         $this->networks = new ArrayCollection();
         $this->status = $status;
-        $this->version = 0;
     }
 
     public static function joinByEmail(
@@ -237,7 +237,7 @@ class User
      */
     public function getNetworks(): array
     {
-        return $this->networks->map(static fn (UserNetwork $network) => $network->getNetwork())->toArray();
+        return $this->networks->map(static fn (UserNetwork $network): Network => $network->getNetwork())->toArray();
     }
 
     public function getConfirmToken(): ?Token
@@ -289,8 +289,12 @@ class User
         if ($this->passwordResetToken && $this->passwordResetToken->isEmpty()) {
             $this->passwordResetToken = null;
         }
-        if ($this->newEmailToken && $this->newEmailToken->isEmpty()) {
-            $this->newEmailToken = null;
+        if (!$this->newEmailToken) {
+            return;
         }
+        if (!$this->newEmailToken->isEmpty()) {
+            return;
+        }
+        $this->newEmailToken = null;
     }
 }

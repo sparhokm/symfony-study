@@ -16,8 +16,8 @@ final class UserBuilder
 {
     private Id $id;
     private Email $email;
-    private string $passwordHash;
-    private DateTimeImmutable $date;
+    private string $passwordHash = 'hash';
+    private readonly DateTimeImmutable $date;
     private Token $joinConfirmToken;
     private bool $active = false;
     private ?Network $networkIdentity = null;
@@ -26,7 +26,6 @@ final class UserBuilder
     {
         $this->id = Id::generate();
         $this->email = new Email('mail@example.com');
-        $this->passwordHash = 'hash';
         $this->date = new DateTimeImmutable();
         $this->joinConfirmToken = new Token(Uuid::getUuid7(), $this->date->modify('+1 day'));
     }

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 final class LoginAction extends AbstractController
 {
-    private AuthenticationUtils $authenticationUtils;
+    private readonly AuthenticationUtils $authenticationUtils;
 
     public function __construct(AuthenticationUtils $authenticationUtils)
     {

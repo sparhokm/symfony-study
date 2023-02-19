@@ -5,7 +5,7 @@ namespace App\Http;
 use App\Http\Application\Action\Auth;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-return static function (RoutingConfigurator $routes) {
+return static function (RoutingConfigurator $routes): void {
     $routes->add('auth_join_by_email', '/auth/join')
         ->methods(['POST'])
         ->controller([Auth\Join\RequestAction::class, 'request'])
@@ -36,11 +36,11 @@ return static function (RoutingConfigurator $routes) {
 
     $routes->add('home', '/')
         ->methods(['GET'])
-        ->controller([Auth\HomeAction::class, 'request'])
+        ->controller((new Auth\HomeAction())->request(...))
     ;
 
     $routes->add('auth_user', '/auth/user')
         ->methods(['GET'])
-        ->controller([Auth\User\UserAction::class, 'request'])
+        ->controller((new Auth\User\UserAction())->request(...))
     ;
 };

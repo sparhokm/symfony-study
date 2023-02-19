@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class UserProvider implements UserProviderInterface
 {
-    private UserByEmail\Fetcher $userByEmailFetcher;
+    private readonly UserByEmail\Fetcher $userByEmailFetcher;
 
     public function __construct(UserByEmail\Fetcher $userByEmailFetcher)
     {
@@ -40,7 +40,7 @@ final class UserProvider implements UserProviderInterface
         }
     }
 
-    private static function identityByUser(UserByEmail\User $user): UserIdentity
+    private function identityByUser(UserByEmail\User $user): UserIdentity
     {
         return new UserIdentity(
             $user->id,

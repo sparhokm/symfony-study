@@ -6,7 +6,7 @@ use App\Http\Infrastructure\Security\UserProvider;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Config\SecurityConfig;
 
-return static function (SecurityConfig $security) {
+return static function (SecurityConfig $security): void {
     $security->provider('user_provider')->id(UserProvider::class);
 
     $devFirewall = $security->firewall('dev');
