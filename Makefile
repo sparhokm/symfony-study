@@ -57,6 +57,12 @@ manager-api-analyze:
 manager-api-analyze-diff:
 	docker-compose run --rm manager-api-php-cli composer psalm
 
+manager-api-rector:
+	docker-compose run --rm manager-api-php-cli composer rector -- --dry-run
+
+manager-api-rector-fix:
+	docker-compose run --rm manager-api-php-cli composer rector
+
 manager-api-test:
 	docker-compose run --rm manager-api-php-cli composer test
 

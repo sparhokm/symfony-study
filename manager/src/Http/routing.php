@@ -36,11 +36,11 @@ return static function (RoutingConfigurator $routes): void {
 
     $routes->add('home', '/')
         ->methods(['GET'])
-        ->controller((new Auth\HomeAction())->request(...))
+        ->controller([Auth\HomeAction::class, 'request'])
     ;
 
     $routes->add('auth_user', '/auth/user')
         ->methods(['GET'])
-        ->controller((new Auth\User\UserAction())->request(...))
+        ->controller([Auth\User\UserAction::class, 'request'])
     ;
 };

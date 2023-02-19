@@ -14,11 +14,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 final class UserProvider implements UserProviderInterface
 {
-    private readonly UserByEmail\Fetcher $userByEmailFetcher;
-
-    public function __construct(UserByEmail\Fetcher $userByEmailFetcher)
+    public function __construct(private readonly UserByEmail\Fetcher $userByEmailFetcher)
     {
-        $this->userByEmailFetcher = $userByEmailFetcher;
     }
 
     public function refreshUser(UserInterface $user): UserInterface

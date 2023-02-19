@@ -18,11 +18,8 @@ use Throwable;
 
 final class ErrorController extends AbstractController
 {
-    private readonly bool $showErrorDetails;
-
-    public function __construct(bool $showErrorDetails)
+    public function __construct(private readonly bool $showErrorDetails)
     {
-        $this->showErrorDetails = $showErrorDetails;
     }
 
     public function show(Throwable $exception, DebugLoggerInterface $logger = null): Response

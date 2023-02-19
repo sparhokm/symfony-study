@@ -11,10 +11,10 @@ use Webmozart\Assert\Assert;
 #[ORM\Embeddable]
 final class Network
 {
-    #[ORM\Column(type: Types::STRING, length: 16)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 16)]
     private readonly string $name;
 
-    #[ORM\Column(type: Types::STRING, length: 16)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 16)]
     private readonly string $identity;
 
     public function __construct(string $name, string $identity)

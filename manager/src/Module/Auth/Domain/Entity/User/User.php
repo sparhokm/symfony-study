@@ -38,13 +38,13 @@ class User
     #[ORM\Id]
     private Id $id;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_IMMUTABLE)]
     private DateTimeImmutable $date;
 
     #[ORM\Column(type: EmailType::NAME, unique: true)]
     private Email $email;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, nullable: true)]
     private ?string $passwordHash = null;
 
     #[ORM\Column(type: StatusType::NAME, length: 16)]

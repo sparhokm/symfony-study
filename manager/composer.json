@@ -37,6 +37,7 @@
         "phpunit/phpunit": "^9.6",
         "psalm/plugin-phpunit": "^0.18.4",
         "psalm/plugin-symfony": "^5.0",
+        "rector/rector": "^0.15.17",
         "symfony/browser-kit": "6.2.*",
         "symfony/css-selector": "6.2.*",
         "symfony/debug-bundle": "6.2.*",
@@ -86,6 +87,7 @@
         "lint": "phplint",
         "php-cs-fixer": "PHP_CS_FIXER_IGNORE_ENV=1 php-cs-fixer --config=.php-cs-fixer.dist.php --allow-risky=yes",
         "psalm": "psalm --config=psalm.xml",
+        "rector": "rector",
         "test": "php bin/phpunit --colors=always",
         "test-coverage": "XDEBUG_MODE=coverage php bin/phpunit --colors=always --coverage-html var/test/coverage",
         "app": "php bin/console"

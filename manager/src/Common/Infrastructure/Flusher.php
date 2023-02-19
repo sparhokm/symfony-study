@@ -9,11 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 final class Flusher implements FlusherInterface
 {
-    private readonly EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function flush(): void

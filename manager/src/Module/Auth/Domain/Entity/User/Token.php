@@ -14,10 +14,10 @@ use Webmozart\Assert\Assert;
 #[ORM\Embeddable]
 final class Token
 {
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, nullable: true)]
     private readonly string $value;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_IMMUTABLE, nullable: true)]
     private readonly DateTimeImmutable $expires;
 
     public function __construct(string $value, DateTimeImmutable $expires)

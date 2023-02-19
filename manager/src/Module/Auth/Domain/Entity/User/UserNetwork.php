@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 /** @final */
 class UserNetwork
 {
-    #[ORM\Column(type: Types::GUID)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::GUID)]
     #[ORM\Id]
     private string $id;
 
