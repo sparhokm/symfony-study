@@ -84,7 +84,7 @@ class User
         $this->version = 0;
     }
 
-    public static function joinUpByEmail(
+    public static function joinByEmail(
         Id $id,
         DateTimeImmutable $date,
         Email $email,

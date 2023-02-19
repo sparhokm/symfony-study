@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Infrastructure\MainFirewall;
+namespace App\Http\Infrastructure\Security;
 
 use App\Http\Domain\Entity\UserIdentity;
 use Symfony\Component\Security\Core\Exception\DisabledException;

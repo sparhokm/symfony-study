@@ -40,7 +40,7 @@ final class Handler
 
         $date = new DateTimeImmutable();
 
-        $user = User::joinUpByEmail(
+        $user = User::joinByEmail(
             Id::generate(),
             $date,
             $email,

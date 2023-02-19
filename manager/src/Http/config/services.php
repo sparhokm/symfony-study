@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Http\Infrastructure\MainFirewall\LoginFormAuthenticator;
-use App\Http\Infrastructure\MainFirewall\UserProvider;
+use App\Http\Infrastructure\Security\LoginFormAuthenticator;
+use App\Http\Infrastructure\Security\UserProvider;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;

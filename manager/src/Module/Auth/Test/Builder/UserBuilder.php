@@ -90,7 +90,7 @@ final class UserBuilder
             );
         }
 
-        $user = User::joinUpByEmail(
+        $user = User::joinByEmail(
             $this->id,
             $this->date,
             $this->email,

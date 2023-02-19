@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Infrastructure\MainFirewall;
+namespace App\Http\Infrastructure\Security;
 
 use App\Common\Application\AppException;
 use App\Common\Domain\DomainException;

@@ -5,6 +5,7 @@ init: docker-down-clear \
 up: docker-up
 down: docker-down
 restart: down up
+check: manager-api-check
 
 docker-up:
 	docker-compose up -d
@@ -24,13 +25,16 @@ docker-build:
 manager-api-clear:
 	docker run --rm -v ${PWD}/manager:/app -w /app alpine sh -c 'rm -rf var/cache/* var/log/* var/test/*'
 
+manager-api-init: manager-api-composer-install manager-api-wait-db manager-api-migrations manager-fixtures
+
 manager-api-wait-db:
 	docker-compose run --rm manager-api-php-cli wait-for-it manager-postgres:5432 -t 30
 
 manager-api-migrations:
 	docker-compose run --rm manager-api-php-cli php bin/console doctrine:migrations:migrate --no-interaction
 
-manager-api-init: manager-api-composer-install manager-api-wait-db manager-api-migrations
+manager-fixtures:
+	docker-compose run --rm manager-api-php-cli php bin/console doctrine:fixtures:load --no-interaction
 
 manager-api-composer-install:
 	docker-compose run --rm manager-api-php-cli composer install

@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Infrastructure\MainFirewall\LoginFormAuthenticator;
-use App\Http\Infrastructure\MainFirewall\UserChecker;
+use App\Http\Infrastructure\Security\LoginFormAuthenticator;
+use App\Http\Infrastructure\Security\UserChecker;
+use App\Http\Infrastructure\Security\UserProvider;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 use Symfony\Config\SecurityConfig;
 
 return static function (SecurityConfig $security) {
-    $security->provider('user_provider')->id(\App\Http\Infrastructure\MainFirewall\UserProvider::class);
+    $security->provider('user_provider')->id(UserProvider::class);
 
     $devFirewall = $security->firewall('dev');
     $devFirewall->pattern('^/(_(profiler|wdt)|css|images|js)/');

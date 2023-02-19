@@ -43,8 +43,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "email": "app2@test.ru",
-    "password": "1234567"
+    "email": "user@app.test",
+    "password": "password"
 }
 
 ### logout ###

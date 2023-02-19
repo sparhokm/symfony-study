@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Infrastructure\MainFirewall;
+namespace App\Http\Infrastructure\Security;
 
 use App\Http\Application\Exception\AccessDenied;
 use App\Http\Application\Exception\LoginException;
