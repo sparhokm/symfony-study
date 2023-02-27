@@ -9,7 +9,7 @@ use Throwable;
 
 final class LoginException extends AppException
 {
-    private const MESSAGE = 'Ошибка авторизации.';
+    public const MESSAGE = 'Ошибка авторизации.';
 
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
     {

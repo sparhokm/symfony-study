@@ -63,8 +63,7 @@ manager-api-rector:
 manager-api-rector-fix:
 	docker-compose run --rm manager-api-php-cli composer rector
 
-manager-api-test:
-	docker-compose run --rm manager-api-php-cli composer test
+manager-api-test: manager-api-test-unit manager-api-test-functional
 
 manager-api-test-coverage:
 	docker-compose run --rm manager-api-php-cli composer test-coverage

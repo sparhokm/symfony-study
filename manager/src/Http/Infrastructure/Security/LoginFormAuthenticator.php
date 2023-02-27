@@ -7,7 +7,7 @@ use App\Http\Application\Exception\LoginException;
 use App\Http\Domain\Entity\UserIdentity;
 use App\Module\Auth\Application\Command\PasswordValidate;
 use App\Module\Auth\Domain\Exception\User\PasswordIncorrect;
-use stdClass;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -61,7 +61,7 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
-        throw new LoginException(previous: $exception);
+        return new JsonResponse(['errors' => [LoginException::MESSAGE]], 400);
     }
 
     public function start(Request $request, AuthenticationException $authException = null): Response
@@ -95,27 +95,28 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
      */
     private function getCredentials(Request $request): array
     {
-        $data = json_decode($request->getContent(), null, 512, JSON_THROW_ON_ERROR);
-        if (!$data instanceof stdClass) {
+        try {
+            $data = (array)json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (\Throwable) {
             throw new BadRequestHttpException('Invalid JSON.');
         }
 
         $credentials = [];
 
         try {
-            if (!\is_string($data->email)) {
+            if (!\array_key_exists('email', $data) || !\is_string($data['email'])) {
                 throw new BadRequestHttpException(sprintf('The key "%s" must be a string.', 'email'));
             }
-            $credentials['username'] = $data->email;
+            $credentials['username'] = $data['email'];
         } catch (AccessException $e) {
             throw new BadRequestHttpException(sprintf('The key "%s" must be provided.', 'email'), $e);
         }
 
         try {
-            if (!\is_string($data->password)) {
+            if (!\array_key_exists('password', $data) || !\is_string($data['password'])) {
                 throw new BadRequestHttpException(sprintf('The key "%s" must be a string.', 'password'));
             }
-            $credentials['password'] = $data->password;
+            $credentials['password'] = $data['password'];
         } catch (AccessException $e) {
             throw new BadRequestHttpException(sprintf('The key "%s" must be provided.', 'password'), $e);
         }

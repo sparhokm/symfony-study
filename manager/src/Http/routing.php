@@ -32,6 +32,7 @@ return static function (RoutingConfigurator $routes): void {
     ;
     $routes->add('auth_logout', '/auth/logout')
         ->methods(['GET'])
+        ->controller([Auth\Logout\LogoutAction::class, 'request'])
     ;
 
     $routes->add('home', '/')

@@ -25,7 +25,7 @@
             <directory>src/Module/Frontend/Test</directory>
         </testsuite>
         <testsuite name="functional">
-            <directory>tests</directory>
+            <directory>src/Http/Test/Functional</directory>
         </testsuite>
     </testsuites>
 

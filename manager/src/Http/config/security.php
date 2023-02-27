@@ -26,7 +26,6 @@ return static function (SecurityConfig $security): void {
             'doctrine' => true,
         ])
     ;
-    $mainFirewall->logout()->path('auth_logout');
 
     $security->accessControl()->path('^/auth/login')->roles(AuthenticatedVoter::PUBLIC_ACCESS);
     $security->accessControl()->path('^/auth/logout')->roles(AuthenticatedVoter::PUBLIC_ACCESS);
