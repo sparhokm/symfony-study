@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Application\Action\Auth;
+use App\Http\Application\Action\OAuth;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 return static function (RoutingConfigurator $routes): void {
@@ -43,5 +44,15 @@ return static function (RoutingConfigurator $routes): void {
     $routes->add('auth_user', '/auth/user')
         ->methods(['GET'])
         ->controller([Auth\User\UserAction::class, 'request'])
+    ;
+
+    $routes->add('oauth_vk_connect', '/oauth/vk/connect')
+        ->methods(['GET'])
+        ->controller([OAuth\Vk\ConnectAction::class, 'request'])
+    ;
+
+    $routes->add('oauth_vk_check', '/oauth/vk/check')
+        ->methods(['GET'])
+        ->controller([OAuth\Vk\CheckAction::class, 'request'])
     ;
 };

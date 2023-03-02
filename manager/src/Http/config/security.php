@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Infrastructure\Security\LoginFormAuthenticator;
+use App\Http\Infrastructure\Security\OAuth\Vk\Authenticator;
 use App\Http\Infrastructure\Security\UserChecker;
 use App\Http\Infrastructure\Security\UserProvider;
 use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
@@ -16,7 +17,8 @@ return static function (SecurityConfig $security): void {
     $mainFirewall = $security->firewall('main');
     $mainFirewall->lazy(true);
     $mainFirewall->provider('user_provider');
-    $mainFirewall->customAuthenticators([LoginFormAuthenticator::class]);
+    $mainFirewall->customAuthenticators([LoginFormAuthenticator::class, Authenticator::class]);
+    $mainFirewall->entryPoint(LoginFormAuthenticator::class);
     $mainFirewall->userChecker(UserChecker::class);
     $mainFirewall->rememberMe()
         ->secret('%kernel.secret%')
@@ -27,6 +29,7 @@ return static function (SecurityConfig $security): void {
         ])
     ;
 
+    $security->accessControl()->path('^/oauth')->roles(AuthenticatedVoter::PUBLIC_ACCESS);
     $security->accessControl()->path('^/auth/login')->roles(AuthenticatedVoter::PUBLIC_ACCESS);
     $security->accessControl()->path('^/auth/logout')->roles(AuthenticatedVoter::PUBLIC_ACCESS);
     $security->accessControl()->path('^/auth/join')->roles(AuthenticatedVoter::PUBLIC_ACCESS);
