@@ -21,7 +21,7 @@ final class CreateTest extends TestCase
     {
         $token = new Token(
             $value = Uuid::getUuid7(),
-            $expires = new DateTimeImmutable()
+            $expires = new DateTimeImmutable(),
         );
 
         self::assertEquals($value, $token->getValue());

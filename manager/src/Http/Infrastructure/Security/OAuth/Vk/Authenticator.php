@@ -54,12 +54,12 @@ final class Authenticator extends OAuth2Authenticator implements AuthenticationE
                     return $this->userProvider->loadUserByIdentifier($email);
                 } catch (UserNotFoundException) {
                     $this->joinByNetworkHandler->handle(
-                        new JoinByNetwork\Command($email, 'vk', $vkUser->getId())
+                        new JoinByNetwork\Command($email, 'vk', $vkUser->getId()),
                     );
 
                     return $this->userProvider->loadUserByIdentifier($email);
                 }
-            })
+            }),
         );
     }
 

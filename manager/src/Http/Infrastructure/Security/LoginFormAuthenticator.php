@@ -50,7 +50,7 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         return new Passport(
             $userBadge,
             new CustomCredentials($this->checkCredentials(...), $credentials['password']),
-            [new RememberMeBadge()]
+            [new RememberMeBadge()],
         );
     }
 
@@ -80,8 +80,8 @@ final class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             $this->passwordHashHandler->handle(
                 new PasswordValidate\Command(
                     password: $password,
-                    passwordHash: $userIdentity->getPassword() ?? ''
-                )
+                    passwordHash: $userIdentity->getPassword() ?? '',
+                ),
             );
 
             return true;

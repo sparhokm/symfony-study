@@ -32,7 +32,7 @@ final class Handler
         $user->resetPassword(
             $command->token,
             new DateTimeImmutable(),
-            $this->hasher->hash($command->password)
+            $this->hasher->hash($command->password),
         );
 
         $this->flusher->flush();

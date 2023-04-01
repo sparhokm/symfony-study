@@ -35,7 +35,7 @@ final class Handler
 
         $user->requestPasswordReset(
             $token = $this->tokenizer->generate($date),
-            $date
+            $date,
         );
 
         $this->flusher->flush();

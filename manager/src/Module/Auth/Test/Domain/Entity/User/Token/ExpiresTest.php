@@ -20,7 +20,7 @@ final class ExpiresTest extends TestCase
     {
         $token = new Token(
             Uuid::getUuid7(),
-            $expires = new DateTimeImmutable()
+            $expires = new DateTimeImmutable(),
         );
 
         self::assertFalse($token->isExpiredTo($expires->modify('-1 secs')));

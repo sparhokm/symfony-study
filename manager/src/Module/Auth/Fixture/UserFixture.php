@@ -31,7 +31,7 @@ final class UserFixture extends Fixture
             $date = new DateTimeImmutable('-30 days'),
             new Email('user@app.test'),
             $this->passwordHasher->hash(self::PASSWORD),
-            new Token($value = Uuid::getUuid7(), $date->modify('+1 day'))
+            new Token($value = Uuid::getUuid7(), $date->modify('+1 day')),
         );
 
         $user->confirmJoin($value, $date);

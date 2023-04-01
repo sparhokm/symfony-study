@@ -29,7 +29,7 @@ final class ChangePasswordTest extends TestCase
         $user->changePassword(
             'old-password',
             'new-password',
-            $hasher
+            $hasher,
         );
 
         self::assertEquals($hash, $user->getPasswordHash());
@@ -48,7 +48,7 @@ final class ChangePasswordTest extends TestCase
         $user->changePassword(
             'wrong-old-password',
             'new-password',
-            $hasher
+            $hasher,
         );
     }
 
@@ -65,7 +65,7 @@ final class ChangePasswordTest extends TestCase
         $user->changePassword(
             'any-old-password',
             'new-password',
-            $hasher
+            $hasher,
         );
     }
 

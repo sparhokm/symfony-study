@@ -1,5 +1,7 @@
 <?php
 
+use PhpCsFixerCustomFixers\Fixer\MultilinePromotedPropertiesFixer;
+
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
     ->append([__FILE__])
@@ -13,6 +15,7 @@ $finder = (new PhpCsFixer\Finder())
 
 return (new PhpCsFixer\Config())
     ->setCacheFile(__DIR__ . '/var/cache/.php_cs')
+    ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
     ->setRules([
         '@PSR12' => true,
         '@PSR12:risky' => true,
@@ -36,13 +39,15 @@ return (new PhpCsFixer\Config())
         'php_unit_strict' => false,
         'php_unit_test_case_static_method_calls' => ['call_type' => 'self'],
 
-        'trailing_comma_in_multiline' => ['elements' => ['arrays']],
+        'trailing_comma_in_multiline' => ['elements' => ['arrays', 'arguments']],
 
         'final_class' => true,
         'final_public_method_for_abstract_class' => true,
         'self_static_accessor' => true,
 
         'static_lambda' => true,
+
+        MultilinePromotedPropertiesFixer::name() => ['minimum_number_of_parameters' => 2],
     ])
     ->setFinder($finder)
 ;

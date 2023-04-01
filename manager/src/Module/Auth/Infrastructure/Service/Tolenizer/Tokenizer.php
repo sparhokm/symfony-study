@@ -19,7 +19,7 @@ final class Tokenizer
     {
         return new Token(
             Uuid::getUuid7(),
-            $date->add($this->interval)
+            $date->add($this->interval),
         );
     }
 }

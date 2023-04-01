@@ -16,8 +16,10 @@ use DateTimeImmutable;
 
 final class Handler
 {
-    public function __construct(private readonly UserRepository $userRepository, private readonly FlusherInterface $flusher)
-    {
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly FlusherInterface $flusher
+    ) {
     }
 
     public function handle(Command $command): void
@@ -37,7 +39,7 @@ final class Handler
             Id::generate(),
             new DateTimeImmutable(),
             $email,
-            $network
+            $network,
         );
 
         $this->userRepository->add($user);

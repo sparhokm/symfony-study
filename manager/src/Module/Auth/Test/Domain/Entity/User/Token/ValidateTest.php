@@ -25,7 +25,7 @@ final class ValidateTest extends TestCase
     {
         $token = new Token(
             $value = Uuid::getUuid7(),
-            $expires = new DateTimeImmutable()
+            $expires = new DateTimeImmutable(),
         );
 
         $token->validate($value, $expires->modify('-1 secs'));
@@ -35,7 +35,7 @@ final class ValidateTest extends TestCase
     {
         $token = new Token(
             Uuid::getUuid7(),
-            $expires = new DateTimeImmutable()
+            $expires = new DateTimeImmutable(),
         );
 
         $this->expectException(Invalid::class);
@@ -46,7 +46,7 @@ final class ValidateTest extends TestCase
     {
         $token = new Token(
             $value = Uuid::getUuid7(),
-            $expires = new DateTimeImmutable()
+            $expires = new DateTimeImmutable(),
         );
 
         $this->expectException(Expired::class);

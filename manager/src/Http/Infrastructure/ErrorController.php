@@ -39,9 +39,9 @@ final class ErrorController extends AbstractController
         return $this->json(
             $this->getErrorData(
                 [$appException->getMessage()],
-                $appException
+                $appException,
             ),
-            422
+            422,
         );
     }
 
@@ -50,9 +50,9 @@ final class ErrorController extends AbstractController
         return $this->json(
             $this->getErrorData(
                 [$appException->getMessage()],
-                $appException
+                $appException,
             ),
-            $appException instanceof AccessDenied ? 401 : 400
+            $appException instanceof AccessDenied ? 401 : 400,
         );
     }
 
@@ -61,9 +61,9 @@ final class ErrorController extends AbstractController
         return $this->json(
             $this->getErrorData(
                 ['http error'],
-                $httpException
+                $httpException,
             ),
-            $httpException->getStatusCode()
+            $httpException->getStatusCode(),
         );
     }
 
@@ -71,13 +71,13 @@ final class ErrorController extends AbstractController
     {
         $errorData = $this->getErrorData(
             ['Ошибка входных данных.'],
-            $validatorException
+            $validatorException,
         );
         $errorData = ['detail' => $this->validatorErrorsArray($validatorException->getViolations())] + $errorData;
 
         return $this->json(
             $errorData,
-            400
+            400,
         );
     }
 
@@ -86,9 +86,9 @@ final class ErrorController extends AbstractController
         return $this->json(
             $this->getErrorData(
                 ['Ошибка входных данных.'],
-                $denormalizerException
+                $denormalizerException,
             ),
-            400
+            400,
         );
     }
 
@@ -97,9 +97,9 @@ final class ErrorController extends AbstractController
         return $this->json(
             $this->getErrorData(
                 ['Системная ошибка.'],
-                $throwable
+                $throwable,
             ),
-            500
+            500,
         );
     }
 

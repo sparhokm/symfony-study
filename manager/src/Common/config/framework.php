@@ -10,6 +10,6 @@ return static function (FrameworkConfig $frameworkConfig): void {
     $mailerConfig = $frameworkConfig->mailer();
     $mailerConfig->envelope()->sender(env('MAILER_FROM_EMAIL'));
     $mailerConfig->header('From')->value(
-        sprintf('"%s" <%s>', (string)env('MAILER_FROM_NAME'), (string)env('MAILER_FROM_EMAIL'))
+        sprintf('"%s" <%s>', (string)env('MAILER_FROM_NAME'), (string)env('MAILER_FROM_EMAIL')),
     );
 };

@@ -13,7 +13,7 @@ return static function (ContainerConfigurator $di): void {
         ->autowire()
         ->autoconfigure()
         ->load(__NAMESPACE__ . '\\', '.')
-        ->exclude('./{Domain,Test,Application,di.php}')
+        ->exclude('./{Domain,Test,Application,di.php,config}')
     ;
 
     $di->import('./config/*.php');

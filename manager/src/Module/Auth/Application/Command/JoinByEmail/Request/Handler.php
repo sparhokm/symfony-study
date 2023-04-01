@@ -45,7 +45,7 @@ final class Handler
             $date,
             $email,
             $this->hasher->hash($command->password),
-            $token = $this->tokenizer->generate($date)
+            $token = $this->tokenizer->generate($date),
         );
 
         $this->users->add($user);

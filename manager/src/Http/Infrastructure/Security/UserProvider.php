@@ -44,7 +44,7 @@ final class UserProvider implements UserProviderInterface
             $user->email,
             $user->passwordHash,
             $user->role,
-            $user->isActive
+            $user->isActive,
         );
     }
 }

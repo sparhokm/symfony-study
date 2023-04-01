@@ -85,7 +85,7 @@ final class UserBuilder
                 $this->id,
                 $this->date,
                 $this->email,
-                $this->networkIdentity
+                $this->networkIdentity,
             );
         }
 
@@ -94,13 +94,13 @@ final class UserBuilder
             $this->date,
             $this->email,
             $this->passwordHash,
-            $this->joinConfirmToken
+            $this->joinConfirmToken,
         );
 
         if ($this->active) {
             $user->confirmJoin(
                 $this->joinConfirmToken->getValue(),
-                $this->joinConfirmToken->getExpires()->modify('-1 day')
+                $this->joinConfirmToken->getExpires()->modify('-1 day'),
             );
         }
 

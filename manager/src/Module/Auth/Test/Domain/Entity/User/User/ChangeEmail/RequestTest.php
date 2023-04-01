@@ -98,7 +98,7 @@ final class RequestTest extends TestCase
     {
         return new Token(
             Uuid::getUuid7(),
-            $date
+            $date,
         );
     }
 }

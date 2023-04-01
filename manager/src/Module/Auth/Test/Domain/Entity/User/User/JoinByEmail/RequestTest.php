@@ -27,7 +27,7 @@ final class RequestTest extends TestCase
             $date = new DateTimeImmutable(),
             $email = new Email('mail@example.com'),
             $hash = 'hash',
-            $token = new Token(Uuid::getUuid7(), new DateTimeImmutable())
+            $token = new Token(Uuid::getUuid7(), new DateTimeImmutable()),
         );
 
         self::assertEquals($id, $user->getId());

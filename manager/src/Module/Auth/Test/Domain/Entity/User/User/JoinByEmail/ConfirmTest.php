@@ -32,7 +32,7 @@ final class ConfirmTest extends TestCase
 
         $user->confirmJoin(
             $token->getValue(),
-            $token->getExpires()->modify('-1 day')
+            $token->getExpires()->modify('-1 day'),
         );
 
         self::assertFalse($user->isWait());
@@ -52,7 +52,7 @@ final class ConfirmTest extends TestCase
 
         $user->confirmJoin(
             Uuid::getUuid7(),
-            $token->getExpires()->modify('-1 day')
+            $token->getExpires()->modify('-1 day'),
         );
     }
 
@@ -67,7 +67,7 @@ final class ConfirmTest extends TestCase
 
         $user->confirmJoin(
             $token->getValue(),
-            $token->getExpires()->modify('+1 day')
+            $token->getExpires()->modify('+1 day'),
         );
     }
 
@@ -85,7 +85,7 @@ final class ConfirmTest extends TestCase
 
         $user->confirmJoin(
             $token->getValue(),
-            $token->getExpires()->modify('-1 day')
+            $token->getExpires()->modify('-1 day'),
         );
     }
 
@@ -93,7 +93,7 @@ final class ConfirmTest extends TestCase
     {
         return new Token(
             Uuid::getUuid7(),
-            new DateTimeImmutable('+1 day')
+            new DateTimeImmutable('+1 day'),
         );
     }
 }

@@ -18,7 +18,7 @@ final class ValidationExceptionTest extends TestCase
     public function testValid(): void
     {
         $exception = new ValidationException(
-            $violations = new ConstraintViolationList()
+            $violations = new ConstraintViolationList(),
         );
 
         self::assertEquals('Ошибка входных данных.', $exception->getMessage());

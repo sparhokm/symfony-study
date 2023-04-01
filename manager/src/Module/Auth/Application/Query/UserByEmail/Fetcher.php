@@ -33,7 +33,7 @@ final class Fetcher
             $user->getEmail()->getValue(),
             $user->getPasswordHash(),
             $user->getRole()->getValue(),
-            $user->isActive()
+            $user->isActive(),
         );
     }
 }
